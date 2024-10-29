@@ -1,11 +1,11 @@
 let ship;
 let bullets = [];
 let enemies = [];
-let score = 0; // スコアを0に設定
-let combo = 0; // コンボカウント
-let lives = 2; // 残機
-let gameState = "start"; // ゲームの状態を管理（start, playing, gameover）
-let defeatedEnemies = 0; // 倒した敵の数
+let score = 0; 
+let combo = 0; 
+let lives = 2; 
+let gameState = "start"; 
+let defeatedEnemies = 0; 
 
 function setup() {
   createCanvas(1000, 500);
@@ -16,21 +16,21 @@ function draw() {
   background(0);
 
   if (gameState === "start") {
-    showStartScreen(); // スタート画面を表示
+    showStartScreen(); 
   } else if (gameState === "playing") {
-    // スコアの表示
+    
     fill(255);
     textSize(22);
-    textAlign(LEFT); // 左揃えに設定
+    textAlign(LEFT); 
     text("スコア: " + score, 10, 20);
-    text("コンボ: " + combo, 10, 45); // コンボの表示
-    text(" 残基: " + lives, 10, 70); // 残機の表示
+    text("コンボ: " + combo, 10, 45); 
+    text(" 残基: " + lives, 10, 70); 
 
-    // 自機の描画と移動
+    
     ship.show();
     ship.move();
 
-    // 弾の描画と移動
+    
     for (let i = bullets.length - 1; i >= 0; i--) {
       bullets[i].show();
       bullets[i].move();
@@ -38,30 +38,30 @@ function draw() {
       for (let j = enemies.length - 1; j >= 0; j--) {
         if (bullets[i].hits(enemies[j])) {
           let enemy = enemies[j];
-          enemies.splice(j, 1); // 敵を倒す
-          bullets.splice(i, 1); // 弾を削除
-          combo++; // コンボを増やす
-          defeatedEnemies++; // 倒した敵の数を増やす
+          enemies.splice(j, 1); 
+          bullets.splice(i, 1); 
+          combo++; 
+          defeatedEnemies++; 
 
-          // 敵の種類によってスコアと残機の変化を設定
+          
           if (enemy.type === "large") {
-            score += 100 + combo * 50; // 大きい敵を倒したときのスコア
+            score += 100 + combo * 50; 
           } else if (enemy.type === "small") {
-            score += 100; // 小さい敵を倒したときのスコア
+            score += 100; 
           }
 
-          // 敵を倒した数が250体を超えた場合、黄色の敵を追加
+          
           if (defeatedEnemies === 250) {
-            enemies.push(new Enemy(random(width), random(100), "yellow")); // 黄色の敵を追加
+            enemies.push(new Enemy(random(width), random(100), "yellow")); 
           } else {
-            enemies.push(new Enemy(random(width), random(100))); // 新しい敵を追加
+            enemies.push(new Enemy(random(width), random(100))); 
           }
-          break; // 衝突が起きたら、ループを抜ける
+          break; 
         }
       }
 
       if (bullets[i] && bullets[i].offscreen()) {
-        bullets.splice(i, 1); // 画面外に出た弾を削除
+        bullets.splice(i, 1); 
       }
     }
 
